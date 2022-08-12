@@ -1,0 +1,49 @@
+extend type Mutation{
+    create_chapter(input: CreateChapterInput @spread): Chapter @field(
+      resolver: "App\\GraphQL\\Mutations\\ChapterMutations@createChapter"
+    )
+    update_chapter(input: UpdateChapterInput @spread): Chapter @field(
+      resolver: "App\\GraphQL\\Mutations\\ChapterMutations@updateChapter"
+    )
+    delete_chapter(id: ID): Boolean @field(
+      resolver: "App\\GraphQL\\Mutations\\ChapterMutations@deleteChapter"
+    )
+}
+extend type Query{
+    get_Chapter(manga_id: ID): [Chapter]  
+    @field(
+      resolver: "App\\GraphQL\\Queries\\ChapterQueries@getChapter"
+    )
+}
+type Chapter{
+    id: String
+    title: String
+    thumb_nail: String
+    content: JSON
+    manga_story: MangaStory
+    chapter: String
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input CreateChapterInput{
+    "name chapter"
+    title: String
+    "avatar chapter"
+    thumb_nail: String
+    "list url images "
+    content: JSON
+    "id manga_stories"
+    manga_story_id: ID
+    "chapter"
+    chapter: String
+}
+
+input UpdateChapterInput{
+    id: ID
+    title: String
+    thumb_nail: String
+    content: JSON
+    manga_story_id: ID
+    chapter: String
+}

@@ -1,0 +1,54 @@
+extend type Mutation{
+    create_manga_story(input: CreateMangaStoryInput @spread): MangaStory @field(
+      resolver: "App\\GraphQL\\Mutations\\MangaStoryMutations@createMangaStory"
+    )
+    update_manga_story(input: UpdateMangaStoryInput @spread): MangaStory @field(
+      resolver: "App\\GraphQL\\Mutations\\MangaStoryMutations@updateMangaStory"
+    )
+    delete_manga_story(id: ID): Boolean @field(
+      resolver: "App\\GraphQL\\Mutations\\MangaStoryMutations@deleteMangaStory"
+    )
+
+}
+extend type Query{
+    all_MangaStory: [MangaStory]  
+    @field(
+      resolver: "App\\GraphQL\\Queries\\MangaStoryQueries@allMangaStory"
+    )
+}
+type MangaStory{
+    id: String
+    name: String
+    avatar: String
+    description: String
+    categories: [Category]
+    author: String
+    sum_chapter: Int
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input CreateMangaStoryInput{
+    "name manga."
+    name: String
+    "avatar of manga."
+    avatar: String
+    "description manga."
+    description: String
+    "list ids category"
+    category_ids: [ID]
+    "author of name manga."
+    author: String
+    "sum chapter of name manga."
+    sum_chapter: Int
+}
+
+input UpdateMangaStoryInput{
+    id: ID
+    name: String
+    avatar: String
+    description: String
+    category_ids: [ID]
+    author: String
+    sum_chapter: Int
+}

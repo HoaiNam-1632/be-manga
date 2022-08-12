@@ -1,0 +1,35 @@
+type Mutation{
+    create_category(input: CreateCategoryInput @spread): Category @field(
+      resolver: "App\\GraphQL\\Mutations\\CategoryMutations@createCategory"
+    )
+    update_category(input: UpdateCategoryInput @spread): Category @field(
+      resolver: "App\\GraphQL\\Mutations\\CategoryMutations@updateCategory"
+    )
+    delete_category(id: ID): Boolean @field(
+      resolver: "App\\GraphQL\\Mutations\\CategoryMutations@deleteCategory"
+    )
+}
+type Query{
+    all_category: [Category]  
+    @field(
+      resolver: "App\\GraphQL\\Queries\\CategoryQueries@allCategory"
+    )
+}
+type Category{
+    id: String
+    name: String
+    slug: String
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input CreateCategoryInput{
+    name: String
+    slug: String
+}
+
+input UpdateCategoryInput{
+    id: ID
+    name: String
+    slug: String
+}
